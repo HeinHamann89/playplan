@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - PlayPlan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@200;400;600;800&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" href="/favicon/favicon.ico" type="image/x-icon">
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-20LP6J9J9C"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());   
+      gtag('config', 'G-20LP6J9J9C');
+    </script>
+
+<style>
+
+/* Resetting default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Karla', sans-serif;
+    background-color: #eff3f8 !important;
+    color: #1a1a1a;
+    overflow-x: hidden;
+    padding-top: 60px;
+}
+
+
+.hero {
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+h1 {
+    font-size: 50px;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 30px;
+    font-weight: 600;
+    padding-bottom: 5px;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+p {
+    font-size: 18px;
+    padding-bottom: 10px;
+}
+
+.returnBtn {
+    text-decoration: none;
+    color: #eff3f8;
+    font-size: 16px;
+    background-color: #0062e3;
+    border: none;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.returnBtn:hover {
+    background-color: #007bff;
+}
+
+@media only screen and (max-width: 800px) {
+    .body {
+        padding: 5px;
+    }
+    .hero {
+        padding: 20px;
+    }
+    .two-columns {
+        flex-direction: column;
+        margin: 10px;
+        max-width: 100%;
+    }
+    .two-columns > div {
+        width: 100%;
+        padding: 30px;
+    }
+    .about-block {
+        margin: 40px 10px;
+        flex-direction: column;
+        padding: 20px;
+    }
+    .about-block > div {
+        width: 100%;
+        padding: 10px;
+    }
+    .image {
+        width: 300px;
+    }
+    .consent-banner > div {
+        flex-direction: column;
+        padding: 8px;
+    }
+    .consent-banner button {
+        margin: 3px;
+        width: 100%;
+    }
+}
+
+/* Consent Banner */
+.consent-banner {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #05203c94;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    color: #fff;
+    padding: 10px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.consent-banner > div {
+    margin: 10px;
+}
+
+.consent-banner p {
+    margin: 0;
+    text-align: left;
+}
+
+.consent-banner a {
+    color: white;
+}
+
+.consent-banner button {
+    margin-left: 10px;
+    padding: 3px 6px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+#accept-btn {
+    background-color: white;
+    color: #1a1a1a;
+}
+
+#decline-btn {
+    background-color: lightgray;
+    color: #1a1a1a;
+}
+
+/* New styles for the navigation menu */
+.navbar {
+    background-color: #05203c;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    }
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+    .logo {
+      color: white;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .nav-links a:hover {
+      color: #eff3f8;
+      text-decoration: underline;
+    }
+
+    .burger {
+      display: none;
+      cursor: pointer;
+      font-size: 24px;
+      color: white;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    @media screen and (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #05203c;
+        padding: 20px;
+      }
+
+      .nav-links a {
+        font-size: 20px;
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .burger {
+        display: block;
+      }
+    }
+
+.logo-icon {
+  height: 20px;
+}
+
+</style>
+</head>
+<body>
+
+<!--- Consent banner -->
+<div id="consent-banner" class="consent-banner">
+  <p>We use cookies to help you find events. See our <a href="privacy-policy.html">privacy policy</a> here.</p>
+  <div>
+      <button id="accept-btn">Accept</button>
+      <button id="decline-btn">Decline</button>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo"><img src="playplan-logo.png" class="logo-icon"> PlayPlan</a>
+      <div class="nav-links" id="navLinks">
+        <a href="calendar-view.html">Calendar</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdHxRp2hvsQ8dwXLjQb8N0GV8Gy4JJ0jnLRyjLxVCqvrgSSTg/viewform">Add Event</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+      <button class="burger" id="burger">
+        <iconify-icon icon="material-symbols:menu-rounded"></iconify-icon>
+      </button>
+    </div>
+  </nav>
+
+<div class="hero">
+    <h1>Privacy policy</h1>
+    <br>
+    <h2>What do we track and how?</h2>
+    <p>We use Google Analytics. It is a website monitoring tool which is added to a website manually using a tracking code and ID which matches our account. You can see it when you right-click and select "inspect" on our website, and look in the head section.</p>
+    <p></p>
+    <br>
+    <h3>What our Google Account tracks</h3>
+    <br>
+        <p><iconify-icon icon="twemoji:check-mark-button"></iconify-icon> Page view quantities</p>
+        <p><iconify-icon icon="twemoji:check-mark-button"></iconify-icon> Average time spent on pages</p>
+        <p><iconify-icon icon="twemoji:check-mark-button"></iconify-icon> New visitors</p>
+        <p><iconify-icon icon="twemoji:check-mark-button"></iconify-icon> Previous visitors</p>
+        <p><iconify-icon icon="twemoji:check-mark-button"></iconify-icon> Scroll depth averages</p>
+        <p><iconify-icon icon="twemoji:check-mark-button"></iconify-icon> Click quantities</p>
+        <p><iconify-icon icon="twemoji:check-mark-button"></iconify-icon> Browser and screen sizes</p>
+        <br>
+    <br>
+    <h3>What our Google Account doesn't track</h3>
+    <br>
+        <p><iconify-icon icon="twemoji:cross-mark"></iconify-icon> Personal information</p>
+        <p><iconify-icon icon="twemoji:cross-mark"></iconify-icon> Your contact details</p>
+        <p><iconify-icon icon="twemoji:cross-mark"></iconify-icon> Your activity on other websites</p>
+        <p><iconify-icon icon="twemoji:cross-mark"></iconify-icon> Your advertising preferences</p>
+    <br>
+    <h2>Why do we track these metrics?</h2>
+    <p>We want to look at how people use the website, which events are the most popular, and how we can improve the overal usability. The data shows us where people click and scroll, so we can determine what is most important to everyone.
+        <br><br>
+        We also look at how many people visit the website every day/week/month/year and split the quanity between new visitors and existing visitors.
+        <br><br>
+        All this information helps us understand what people like and not like about our website. We can then determine what features to add/remove, and what needs to be improved.
+    </p>
+    <br>
+    <h2>Can I opt out?</h2>
+    <p>Definately. We offer you the choice when you first visit our website to Accept or Decline our tracking. If you wish to change your innitial choice, simply email us on <a href="mailto:hello@playplan.co.uk?subject=Remove%20my%20IP%20Address&body=Hello!%0A%0AWe%20created%20this%20using%20a%20bit%20of%20HTML%20magic.%20Please%20add%20your%20IP%20address%20here%3A">hello@playplan.co.uk</a> and we will add your IP address to a list which our Google Analytics account should ignore.</p>
+    <p style=" color: #888; margin-top: 10px;">Last updated: 27 June 2024</p>
+    <br>
+    <a href="index.html" class="returnBtn">< Return Home</a>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var consentBanner = document.getElementById("consent-banner");
+    var acceptBtn = document.getElementById("accept-btn");
+    var declineBtn = document.getElementById("decline-btn");
+
+    // Check local storage for consent state
+    var consentState = localStorage.getItem('consentState');
+
+    if (consentState === 'granted') {
+        // Set Google Consent Mode to 'granted'
+        window.gtag('consent', 'update', {
+            'analytics_storage': 'granted',
+            'ad_storage': 'granted'
+        });
+        // Hide the consent banner
+        consentBanner.style.display = 'none';
+    } else if (consentState === 'denied') {
+        // Set Google Consent Mode to 'denied'
+        window.gtag('consent', 'update', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied'
+        });
+        // Hide the consent banner
+        consentBanner.style.display = 'none';
+    } else {
+        // Show the consent banner
+        consentBanner.style.display = 'flex';
+    }
+
+    acceptBtn.addEventListener("click", function() {
+        // Set Google Consent Mode to 'granted'
+        window.gtag('consent', 'update', {
+            'analytics_storage': 'granted',
+            'ad_storage': 'granted'
+        });
+
+        // Store consent state
+        localStorage.setItem('consentState', 'granted');
+
+        // Hide the consent banner
+        consentBanner.style.display = 'none';
+    });
+
+    declineBtn.addEventListener("click", function() {
+        // Set Google Consent Mode to 'denied'
+        window.gtag('consent', 'update', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied'
+        });
+
+        // Store consent state
+        localStorage.setItem('consentState', 'denied');
+
+        // Hide the consent banner
+        consentBanner.style.display = 'none';
+    });
+});
+
+// Navbar Toggle
+document.addEventListener("DOMContentLoaded", function() {
+      const burger = document.getElementById("burger");
+      const navLinks = document.getElementById("navLinks");
+      const burgerIcon = burger.querySelector("iconify-icon");
+
+      burger.addEventListener("click", function() {
+        navLinks.classList.toggle("show");
+        if (navLinks.classList.contains("show")) {
+          burgerIcon.setAttribute("icon", "material-symbols:close-rounded");
+        } else {
+          burgerIcon.setAttribute("icon", "material-symbols:menu-rounded");
+        }
+      });
+});
+
+
+</script>
+
+</body>
+</html>

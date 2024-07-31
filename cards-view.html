@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.js'></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<title>Cards View</title>
+
+<style>
+
+* {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: "Karla", sans-serif;
+        background-color: rgb(204, 225, 230);
+        margin: 0;
+        padding: 0;
+        touch-action: manipulation;
+    }
+
+    .top-buttons {
+        display: flex;
+        background-color: #05203c;
+        padding: 10px 0 10px 0 !important;
+    }
+
+    .top-buttons > div {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #toggleAdvancedFilter {
+        background-color: #0062e3;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 6px 10px !important;
+        margin-left: 10px;
+        font-family: inherit;
+        font-weight: 400;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    #toggleAdvancedFilter:hover {
+        background-color: #007bff;
+    }
+
+    .filter {
+        display: flex;
+        justify-content: space-between;
+        background-color: #05203c;
+        padding: 2px 5px;
+    }
+
+    .filter > div {
+        width: 100%;
+        flex-direction: row;
+    }
+
+    .filter label {
+        color: white;
+        font-weight: 600;
+        font-size: 20px;
+        margin: 5px 0;
+        float: left;
+        font-family: inherit;
+    }
+
+    .filter select, .filter #date {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 6px;
+        background-color: #234364;
+        color: #eff3f8;
+        border-radius: 6px;
+        border: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        font-family: inherit;
+    }
+
+    .select2 {
+        width: 100% !important;
+        border-radius: 0;
+        color: #eff3f8;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        border-radius: 6px;
+        padding: 3.5px;
+        background-color: #234364;
+        color: #eff3f8;
+        border: none;
+    }
+
+    .filter select:hover {
+        cursor: pointer;
+    }
+
+    .filter .advanced-filter {
+        gap: 10px !important;
+        padding-bottom: 20px;
+        display: none;
+    }
+
+    .advanced-filter {
+        display: none; /* Ensure this is set to none initially */
+    }
+
+    .filter-buttons > div {
+        width: 100%;
+        margin: 10px 0;
+        float: left;
+    }
+
+    #resetButton {
+        background-color: #e0e4e9;
+        color: #161616;
+        font-family: inherit;
+        font-size: 16px;
+        border: none;
+        border-radius: 6px;
+        padding: 6px 10px !important;
+        cursor: pointer;
+    }
+
+    #resetButton:hover {
+        background-color: white;
+    }
+
+    .advanced-filter {
+        display: none;
+    }
+
+    input[type="date"]::-webkit-inner-spin-button,
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        -webkit-appearance: none;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select {
+        padding: 5px;
+        font-size: 16px;
+        color: #161616;
+    }
+
+    input[type="date"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        position: relative;
+        font-family: inherit;
+        font-size: 16px;
+        text-align: left;
+        color: #161616;
+        background-color: white;
+        padding: 5px;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    input[type="date"]:focus {
+        border-color: #007bff;
+        outline: none;
+        padding: 5px;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        background: transparent;
+        bottom: 0;
+        color: transparent;
+        cursor: pointer;
+        height: auto;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: auto;
+    }
+
+
+
+    .get-tickets {
+        background-color: #0062e3;
+        color: white;
+        float: left;
+        margin-top: 20px;
+        margin-right: 5px;
+        padding: 6px;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .get-tickets:hover {
+        background-color: #007bff;
+    }
+
+    @media (max-width: 700px) {
+        /* Media query for screen width less than 1000px */
+
+        #toggleAdvancedFilter {
+        flex-direction: column;
+        font-weight: 500;
+        -webkit-appearance: none;
+        }
+
+        #resetButton {
+            font-weight: 500;
+            -webkit-appearance: none;
+        }
+
+        .filter .advanced-filter {
+        flex-direction: column;
+        }
+
+        .filter > div {
+            width: 100%;
+        }
+
+        .filter label {
+            padding-top: 0px;
+        }
+
+        .event-tile {
+            padding: 3px;
+            margin-bottom: 2px;
+            border-radius: 3px;
+        }
+
+        .get-tickets {
+            width: 95%;
+            text-align: center;
+        }
+
+        #modalEventImage {
+        max-width: 300px;
+        max-height: 300px !important;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: none; /* Hide the image by default */
+        }
+
+        input[type='date'], input[type='time'] {
+            -webkit-appearance: none;
+            padding: 6px !important;
+        }
+    }
+
+    /* Modal Styles */
+    #eventModal {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-dialog {
+        border: solid 1px #626971;
+        border-radius: 5px;
+        background-color: white;
+        color: #161616;
+    }
+
+    .modal-content {
+        border: none;
+        font-family: inherit;
+        font-size: 18px;
+        background-color: white;
+        color: #161616;
+    }
+
+    .modal-title {
+        font-weight: 700;
+        color: #161616;
+    }
+
+    #modalEventTicketsLink {
+        padding: 10px;
+        background-color: #0062e3;
+        border: none;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        text-align: center;
+        width: 100%;
+    }
+
+    #modalEventTicketsLink:hover {
+        background-color: #007bff;
+    }
+
+    .btn-secondary {
+        padding: 10px;
+        background-color: #eff3f8;
+        border: none;
+        color: #161616;
+        border-radius: 8px;
+        text-decoration: none;
+        width: 100%;
+        font-size: 18px !important;
+    }
+
+    .btn-secondary:hover {
+        background-color: #ccc !important;
+        color: #161616;
+    }
+
+    /* Ensure the image fits well within the modal */
+    #modalEventImage {
+        max-width: 600px;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: none; /* Hide the image by default */
+    }
+
+    .iconfy {
+        height: 0.8em;
+    }
+
+  /* CSS for event layout */
+  .event {
+      border-radius: 10px;
+      background-color: #fff;
+      padding: 20px;
+      padding-bottom: 20px;
+      margin: 10px;
+      width: calc(33.33% - 20px); /* Adjusted width for 3 columns with margin */
+      float: left;
+      box-sizing: border-box;
+      position: relative;
+      line-height: 1.7rem;
+  }
+
+  .event h2 {
+    font-weight: 800;
+    font-size: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-bottom: 10px;
+  }
+  
+  .event button {
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    width: 48%; /* 50% width for each button */
+    text-align: center;
+    font-family: "Karla", sans-serif;
+    padding: 6px;
+    border-radius: 6px;
+    border: none;
+  }
+
+  p strong {
+      color: grey;
+      font-weight: 400;
+  }
+
+  /* Scroll down animation keyframes */
+  @keyframes floatAnimation {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(20px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 800px) {
+      /* Media query for screen width less than 1000px */
+      .filter {
+          padding: 0 5px;
+        }
+
+        .filter > div {
+          width: 100%;
+        }
+
+        .filter button {
+            width: 100%;
+            margin: 10px 0;
+            background-color: #091723;
+        }
+
+        .filter label {
+          padding-top: 10px;
+        }
+
+      #date {
+        margin-bottom: 10px;
+      }
+
+      /* Media query for events to be 1x1 full width */
+      .event {
+          width: calc(100% - 20px);
+          float: none;
+          margin-bottom: 30px !important;
+      }
+  }
+
+  #filterResult {
+    text-align: center !important;
+    background-color: white;
+    color: black;
+    font-weight: 400;
+    width: fit-content;
+    margin: 40px auto;
+    padding: 3px 6px;
+    border-radius: 5px;
+    animation: floatAnimation 2.5s infinite;
+  }
+
+  /* Clear float after every third event */
+  .event:nth-child(3n + 1) {
+      clear: left;
+  }
+  
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+</head>
+<body>
+    <div class="top-buttons">
+        <div class="filter-buttons">
+            <button id="toggleAdvancedFilter">Show Filters</button>&nbsp;&nbsp;<button id="resetButton">Reset <iconify-icon icon="material-symbols:settings-backup-restore" class="iconfy"></iconify-icon></button><a href="https://playplan.co.uk/" style="float: right; margin-right: 10px; margin-top: 5px; text-decoration: none; color: white;">Exit ></a>
+        </div>
+    </div>
+    <div class="filter">
+        <div>
+            <div class="filter advanced-filter" id="advancedFilterDiv">
+                <div>
+                    <label for="category">Category:</label>
+                    <select id="category" multiple="multiple">
+                        <option value="BDSMkink">BDSM/Kink</option>
+                        <option value="CommunityFriendly">Community Friendly</option>
+                        <option value="Dance">Dance</option>
+                        <option value="Dungeon">Dungeon</option>
+                        <option value="HouseParty">House Party</option>
+                        <option value="PlayParty">Play Party</option>
+                        <option value="PrivateParty">Private Party</option>
+                        <option value="QueerSpecific">Queer Specific</option>
+                        <option value="Social">Social</option>
+                        <option value="Spa">Spa</option>
+                        <option value="Workshop">Workshop</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="city">City:</label>
+                    <select id="city">
+                        <option value="all">All</option>
+                        <option value="Online">Online/Virtual</option>
+                        <option value="">--- UK ---</option>
+                        <option value="Brighton">Brighton</option>
+                        <option value="Edinburgh">Edinburgh</option>
+                        <option value="Liverpool">Liverpool</option>
+                        <option value="London">London</option>
+                        <option value="Manchester">Manchester</option>
+                        <option value="">--- INTERNATIONAL ---</option>
+                        <option value="Berlin">Berlin</option>
+                        <option value="Ibiza">Ibiza</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Los Angeles">Los Angeles</option>
+                        <option value="New York">New York</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="host">Hosted by:</label>
+                    <select id="host">
+                        <option value="all">All</option>
+                        <option value="7sins">7sins</option>
+                        <option value="Dominium Vita">Dominium Vita</option>
+                        <option value="Feeld">Feeld</option>
+                        <option value="Fox & Badge">Fox & Badge</option>
+                        <option value="Heavens Circle">Heaven's Circle</option>
+                        <option value="Joyride">Joyride</option>
+                        <option value="Klub Verboten">Klub Verboten</option>
+                        <option value="Killing Kittens">Killing Kittens</option>
+                        <option value="La Boutique Bazaar">La Boutique Bazaar</option>
+                        <option value="Le Boudior">Le Boudior</option>
+                        <option value="Torture Garden">Torture Garden</option>
+                        <option value="Polyglam">Polyglam</option>
+                        <option value="Quench">Quench</option>
+                        <option value="Riot">RIOT</option>
+                        <option value="Rocket Project">Rocket Project</option>
+                        <option value="The Tribe">Tribe</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="perfect_for">Made For:</label>
+                    <select id="perfect_for">
+                        <option value="all">All</option>
+                        <option value="Everyone">Everyone</option>
+                        <option value="Singles">Singles</option>
+                        <option value="Couples">Couples</option>
+                        <option value="Newbies">Newbies</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="date">Date:</label>
+                    <input type="date" id="date">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<div class="filter-result">
+  <p id="filterResult">Filter results</p>
+</div>
+
+<div id="events">
+    <!-- Fetch and display events data here from Google Sheets -->
+</div>
+
+<!-- Modal Structure -->
+<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventModalLabel"><iconify-icon icon="material-symbols:event-available" class="iconfy"></iconify-icon> Event Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modalEventImage" src="" alt="Event Image" style="width: 100%; height: auto; display: none;">
+                <p style="font-size: 30px; font-weight: 700;"><strong></strong> <span id="modalEventTitle"></span></p>
+                <p><strong></strong><iconify-icon icon="material-symbols:person" class="iconfy"></iconify-icon> <span id="modalEventHost"></span></p>
+                <p><strong><iconify-icon icon="material-symbols:calendar-today" class="iconfy"></iconify-icon></strong> <span id="modalEventDate"></span></p>
+                <p><strong><iconify-icon icon="material-symbols:location-on" class="iconfy"></iconify-icon></strong> <span id="modalEventLocation"></span></p>
+                <p><strong><iconify-icon icon="material-symbols:check-box" class="iconfy"></iconify-icon></strong> <span id="modalEventVenue"></span></p>
+                <p><a href="#" target="_blank" id="modalEventMapLink">View location on map ></a></p>
+                <p><strong>Description:<br></strong> <span id="modalEventDescription"></span></p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" target="_blank" id="modalEventTicketsLink">Get Tickets</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const eventsContainer = document.getElementById('events');
+    const cityFilter = document.getElementById('city');
+    const dateFilter = document.getElementById('date');
+    const categoryFilter = document.getElementById('category');
+    const hostFilter = document.getElementById('host');
+    const perfectForFilter = document.getElementById('perfect_for');
+    const resetButton = document.getElementById('resetButton');
+    const toggleButton = document.getElementById('toggleAdvancedFilter');
+    const advancedFilter = document.querySelector('.advanced-filter');
+    const filterResult = document.getElementById('filterResult');
+    const proxyUrl = 'proxy_cards.php';
+
+    async function fetchEvents() {
+        try {
+            const response = await fetch(proxyUrl);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.text();
+            const parsedData = Papa.parse(data, {
+                header: true,
+                skipEmptyLines: true
+            });
+            return parsedData.data.map(row => ({
+                name: row.Title,
+                date: row.Start.split('/').reverse().join('-'),
+                location: row.Location,
+                host: row.Host,
+                category: row.Category.split(',').map(cat => cat.trim()),
+                description: row.Description.replace(/\n/g, '<br>'),
+                perfectFor: row.PerfectFor,
+                ticketsLink: row.TicketsLink,
+                image: row.Image,
+                mapUrl: row.MapURL
+            }));
+        } catch (error) {
+            console.error('Error fetching events:', error);
+            return [];
+        }
+    }
+
+    function getSelectedOptions(selectElement) {
+        return Array.from(selectElement.selectedOptions).map(option => option.value);
+    }
+
+    function renderEvents(events) {
+        eventsContainer.innerHTML = '';
+        events.forEach(event => {
+            const eventDiv = document.createElement('div');
+            eventDiv.classList.add('event');
+            eventDiv.innerHTML = `
+                <h2>${event.name}</h2>
+                <p class="host-name"><strong>Hosted by:</strong> ${event.host}</p>
+                <p><strong>Date:</strong> ${event.date}</p>
+                <p><strong>Location:</strong> ${event.location}</p>
+                <p><strong>Category:</strong> ${event.category.join(', ')}</p>
+                <p><strong>Perfect For:</strong> ${event.perfectFor}</p>
+                <button class="eventModal">Details</button>
+                <button class="get-tickets" onclick="window.open('${event.ticketsLink}', '_blank')">Get Tickets</button>
+                <p class="description" style="display: none;">${event.description}</p>
+            `;
+            eventsContainer.appendChild(eventDiv);
+        });
+    }
+
+  
+      function filterEvents(events) {
+          const selectedCity = cityFilter.value;
+          const selectedDate = dateFilter.value;
+          const selectedCategories = getSelectedOptions(categoryFilter);
+          const selectedHost = hostFilter.value;
+          const selectedPerfectFor = perfectForFilter.value;
+  
+          const filteredEvents = events.filter(event => {
+              const isCityMatch = selectedCity === 'all' || event.location === selectedCity || (selectedCity === 'Online' && event.location.includes('Online'));
+              const isDateMatch = !selectedDate || event.date === selectedDate;
+              const isCategoryMatch = selectedCategories.length === 0 || selectedCategories.some(category => event.category.includes(category));
+              const isHostMatch = selectedHost === 'all' || event.host === selectedHost;
+              const isPerfectForMatch = selectedPerfectFor === 'all' || event.perfectFor === selectedPerfectFor;
+  
+              return isCityMatch && isDateMatch && isCategoryMatch && isHostMatch && isPerfectForMatch;
+          });
+  
+          const resultText = `Results: ${filteredEvents.length} events found`;
+          filterResult.textContent = resultText;
+  
+          return filteredEvents;
+      }
+  
+      const allEvents = await fetchEvents();
+  
+      renderEvents(allEvents);
+  
+      [cityFilter, dateFilter, categoryFilter, hostFilter, perfectForFilter].forEach(filter => {
+          filter.addEventListener('change', () => {
+              const filteredEvents = filterEvents(allEvents);
+              renderEvents(filteredEvents);
+          });
+      });
+  
+      resetButton.addEventListener('click', () => {
+          cityFilter.value = 'all';
+          dateFilter.value = '';
+          categoryFilter.value = '';
+          hostFilter.value = 'all';
+          perfectForFilter.value = 'all';
+          const filteredEvents = filterEvents(allEvents);
+          renderEvents(filteredEvents);
+      });
+  
+      toggleButton.addEventListener('click', () => {
+          const isAdvancedFilterVisible = advancedFilter.style.display === 'flex';
+          advancedFilter.style.display = isAdvancedFilterVisible ? 'none' : 'flex';
+          toggleButton.textContent = isAdvancedFilterVisible ? 'Show Filters' : 'Hide Filters';
+      });
+  
+      $(categoryFilter).select2({
+          placeholder: 'Select categories',
+          width: '200px'
+      });
+  });
+  
+  document.addEventListener("click", event => {
+      if (event.target.classList.contains('eventModal')) {
+          const eventModal = event.target.nextElementSibling;
+          if (eventModal.style.display === 'none') {
+            eventModal.style.display = 'block';
+              event.target.textContent = 'Details';
+          } else {
+            eventModal.style.display = 'none';
+              event.target.textContent = 'Details';
+          }
+      }
+  });
+
+  document.addEventListener("DOMContentLoaded", async () => {
+
+    function handleDetailsButtonClick(event) {
+        const eventCard = event.target.closest('.event');
+        const modalTitle = document.getElementById('modalEventTitle');
+        const modalHost = document.getElementById('modalEventHost');
+        const modalDate = document.getElementById('modalEventDate');
+        const modalLocation = document.getElementById('modalEventLocation');
+        const modalVenue = document.getElementById('modalEventVenue');
+        const modalDescription = document.getElementById('modalEventDescription');
+        const modalImage = document.getElementById('modalEventImage');
+        const modalTicketsLink = document.getElementById('modalEventTicketsLink');
+        const modalMapLink = document.getElementById('modalEventMapLink');
+
+        modalImage.textContent = eventCard.querySelector('image')
+        modalTitle.textContent = eventCard.querySelector('h2').textContent;
+        modalHost.textContent = eventCard.querySelector('.host-name').textContent.replace('Hosted by: ', '');
+        modalDate.textContent = eventCard.querySelector('p:nth-of-type(2)').textContent.replace('Date: ', '');
+        modalLocation.textContent = eventCard.querySelector('p:nth-of-type(3)').textContent.replace('Location: ', '');
+        modalDescription.innerHTML = eventCard.querySelector('.description').innerHTML;
+
+        const imageUrl = eventCard.querySelector('img') ? eventCard.querySelector('img').src : '';
+        if (imageUrl) {
+            modalImage.src = imageUrl;
+            modalImage.style.display = 'block';
+        } else {
+            modalImage.style.display = 'none';
+        }
+
+        const ticketsLink = eventCard.querySelector('.get-tickets').getAttribute('onclick').match(/'(.*?)'/)[1];
+        modalTicketsLink.href = ticketsLink;
+
+        const mapUrl = eventCard.querySelector('.description').getAttribute('data-map-url');
+        if (mapUrl) {
+            modalMapLink.href = mapUrl;
+        }
+
+        const modal = new bootstrap.Modal(document.getElementById('eventModal'));
+        modal.show();
+    }
+
+    document.getElementById('events').addEventListener('click', event => {
+        if (event.target.classList.contains('eventModal')) {
+            handleDetailsButtonClick(event);
+        }
+    });
+
+    // Initial fetch and render
+    const events = await fetchEvents();
+    renderEvents(events);
+});
+
+</script>
+
+
+</body>
+</html> 
