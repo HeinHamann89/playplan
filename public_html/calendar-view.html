@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar View - PlayPlan</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="/favicon/favicon.ico" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.js'></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-20LP6J9J9C"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-20LP6J9J9C');
+</script>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Karla", sans-serif;
+    background-color: rgb(204, 225, 230);
+    margin: 0;
+    padding: 0;
+    touch-action: manipulation;
+}
+
+#calendar {
+    margin: 20px auto;
+    padding: 0 10px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* 100% of the viewport height */
+}
+
+/* Calendar current day grid*/
+.fc-scroller-harness {
+    background-color: white;
+}
+
+/* Calendar months header grid*/
+.fc-col-header-cell {
+    background-color: #05203c !important;
+    color: white !important;
+}
+
+.fc-col-header-cell a {
+    color: white !important;
+    text-decoration: none;
+}
+
+/* Calendar day grid*/
+.fc-day {
+    background-color: #fff;
+}
+
+.fc-day a {
+    color: #161616;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.fc-event-title {
+    font-size: 16px;
+    margin: 0 5px;
+}
+
+.top-buttons {
+    display: flex;
+    background-color: #05203c;
+    padding: 7px 0;
+}
+
+.top-buttons > div {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#toggleAdvancedFilter {
+    background-color: #0062e3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 6px !important;
+    margin-left: 10px;
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#toggleAdvancedFilter:hover {
+    background-color: #007bff;
+}
+
+.filter {
+    display: flex;
+    justify-content: space-between;
+    background-color: #05203c;
+    padding: 2px 5px;
+}
+
+.filter > div {
+    width: 100%;
+    flex-direction: row;
+}
+
+.filter label {
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 5px 0;
+    float: left;
+    font-family: inherit;
+}
+
+.filter select, .filter #date {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 6px;
+    background-color: #234364;
+    color: #eff3f8;
+    border-radius: 4px;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-family: inherit;
+}
+
+.select2 {
+    width: 100% !important;
+    border-radius: 0;
+    color: #eff3f8;
+    cursor: pointer;
+}
+
+.select2-container--default .select2-selection--multiple {
+    border-radius: 4px;
+    padding: 3.5px;
+    background-color: #234364;
+    color: #eff3f8;
+    border: none;
+    cursor: pointer;
+}
+
+.filter select:hover {
+    cursor: pointer;
+}
+
+.filter .advanced-filter {
+    gap: 10px !important;
+    padding-bottom: 20px;
+    display: none;
+}
+
+.advanced-filter {
+    display: none; /* Ensure this is set to none initially */
+}
+
+.filter-buttons > div {
+    width: 100%;
+    margin: 10px 0;
+    float: left;
+}
+
+#resetButton {
+    background-color: #e0e4e9;
+    color: #161616;
+    font-family: inherit;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 6px !important;
+    cursor: pointer;
+    display: none;
+}
+
+#resetButton:hover {
+    background-color: white;
+}
+
+.advanced-filter {
+    display: none;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+    padding: 5px;
+    font-size: 16px;
+    color: #161616;
+    cursor: pointer;
+}
+
+input[type="date"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: relative;
+    font-family: inherit;
+    font-size: 16px;
+    text-align: left;
+    color: #161616;
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+input[type="date"]:focus {
+    border-color: #007bff;
+    outline: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+    cursor: pointer;
+}
+
+/* Override the default cell height */
+.fc-daygrid-day-frame {
+    min-height: 10px; /* Set a base height for day cells */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.fc-daygrid-day-events {
+    overflow-y: auto; /* Enable vertical scrolling for overflow events */
+    margin-bottom: 10px;
+}
+
+/* Adjust event styles */
+.fc-event {
+    margin: 2px; /* Reduce margin to fit more events */
+    padding: 0px; /* Reduce padding */
+    font-size: 18px; /* Reduce font size */
+    line-height: 1.2em;
+    border: none;
+}
+
+/* Ensure the calendar expands with more events */
+.fc-daygrid-day {
+    height: auto !important;
+}
+
+.event-tile {
+    padding: 3px 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.fc-h-event {
+    background-color: rgba(0, 0, 255, 0.2);
+    background: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.fc-event-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 5px !important;}
+
+.fc-button {
+    background-color: white !important;
+    color: #161616 !important;
+    border-radius: 4px !important;
+}
+
+.get-tickets {
+    background-color: #ff4f40; /* Blue color for Get Tickets button */
+    color: white;
+    float: left;
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.get-tickets:hover {
+    background-color: #ff3b29;
+}
+
+@media (max-width: 700px) {
+    /* Media query for screen width less than 1000px */
+    #toggleAdvancedFilter {
+        flex-direction: column;
+        font-weight: 500;
+        -webkit-appearance: none;
+        padding: 6px !important;
+    }
+
+    #resetButton {
+        font-weight: 500;
+        -webkit-appearance: none;
+        padding: 6px !important;
+    }
+
+    .filter .advanced-filter {
+        flex-direction: column;
+    }
+
+    .filter > div {
+        width: 100%;
+    }
+
+    .filter label {
+        padding-top: 0px;
+    }
+
+    #calendar {
+        width: 100%;
+        height: 90vh; /* 90% of the viewport height */
+        margin-top: 20px;
+    }
+
+    .fc {
+        height: auto;
+        width: auto;
+    }
+
+    .fc-toolbar-title {
+        font-size: 22px !important;
+    }
+
+    .fc-h-event {
+        padding: 4px 0;
+    }
+
+    .event-tile {
+        padding: 3px;
+        margin-bottom: 2px;
+        border-radius: 3px;
+    }
+
+    .get-tickets {
+        width: 95%;
+        text-align: center;
+    }
+
+    #modalEventImage {
+        max-width: 300px;
+        max-height: 300px !important;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: none; /* Hide the image by default */
+    }
+
+    input[type='date'], input[type='time'] {
+        -webkit-appearance: none;
+        padding: 6px !important;
+    }
+
+    #filterResult {
+        display: none;
+    }
+
+    .consent-banner > div {
+        flex-direction: column;
+        padding: 8px;
+    }
+
+    .consent-banner button {
+        margin: 3px;
+        width: 100%;
+    }
+}
+
+/* Modal Styles */
+#eventModal {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal-dialog {
+    border: solid 1px #626971;
+    border-radius: 5px;
+    background-color: white;
+    color: #161616;
+}
+
+.modal-content {
+    border: none;
+    font-family: inherit;
+    font-size: 18px;
+    background-color: white;
+    color: #161616;
+}
+
+.modal-title {
+    font-weight: 700;
+    color: #161616;
+}
+
+#modalEventTicketsLink {
+    padding: 10px;
+    background-color: #0062e3;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+    font-weight: 600;
+}
+
+#modalEventTicketsLink:hover {
+    background-color: #007bff;
+}
+
+.btn-secondary {
+    padding: 10px;
+    background-color: #eff3f8;
+    border: none;
+    color: #161616;
+    border-radius: 6px;
+    text-decoration: none;
+    width: 100%;
+    font-size: 18px !important;
+    font-weight: 600;
+}
+
+.btn-secondary:hover {
+    background-color: #ccc !important;
+    color: #161616;
+}
+
+.dropbtn {
+    background-color: #05203c;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    display: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #05203c;
+    min-width: 160px;
+    width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #0a3c71}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #0a3c71;
+}
+
+/* Ensure the image fits well within the modal */
+#modalEventImage {
+    max-width: 600px;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: none; /* Hide the image by default */
+}
+
+.iconfy {
+    height: 0.8em;
+}
+
+#filterResult {
+    text-align: center !important;
+    background-color: white;
+    color: black;
+    font-weight: 400;
+    width: fit-content;
+    margin: 20px auto -55px auto;
+    padding: 3px 6px;
+    border-radius: 5px;
+    display: none;
+}
+
+/* Consent Banner */
+.consent-banner {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #05203c94;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    color: #fff;
+    padding: 10px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.consent-banner p {
+    margin: 0;
+    text-align: left;
+}
+
+.consent-banner a {
+    color: white;
+}
+
+.consent-banner button {
+    margin-left: 10px;
+    padding: 3px 6px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#accept-btn {
+    background-color: white;
+    color: #1a1a1a;
+}
+
+#decline-btn {
+    background-color: lightgray;
+    color: #1a1a1a;
+}
+
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #05203c94;
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+    color: white;
+}
+
+.spinner {
+    border: 5px solid #fff;
+    border-top: 5px solid #05203c;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+</style>
+</head>
+<body>
+
+<!--- Consent banner -->
+<div id="consent-banner" class="consent-banner">
+    <p>We use cookies to help you find events. See our <a href="privacy-policy.html">privacy policy</a> here.</p>
+    <div>
+        <button id="accept-btn">Accept</button>
+        <button id="decline-btn">Decline</button>
+    </div>
+</div>
+
+<!--- Filter section -->
+<div class="top-buttons">
+    <div class="filter-buttons">
+        <button id="toggleAdvancedFilter">Filters <iconify-icon icon="material-symbols:filter-list" class="iconfy"></iconify-icon></button>&nbsp;&nbsp;<button id="resetButton">Reset <iconify-icon icon="material-symbols:settings-backup-restore" class="iconfy"></iconify-icon></button><a href="https://playplan.co.uk/" style="float: right; margin-right: 10px; margin-top: 5px; text-decoration: none; color: white;">Exit ></a>
+    </div>
+</div>
+
+<div class="filter">
+    <div>
+        <div class="filter advanced-filter" id="advancedFilterDiv">
+            <div>
+                <label for="category">Category:</label>
+                <select id="category" multiple="multiple">
+                    <option value="BDSM kink">BDSM & Kink</option>
+                    <option value="Fetish">Fetish</option>
+                    <option value="Dom Sub">Dom/Sub</option>
+                    <option value="Community Friendly">Community Friendly</option>
+                    <option value="Dance">Dance</option>
+                    <option value="Dungeon">Dungeon</option>
+                    <option value="House Party">House Party</option>
+                    <option value="Play Party">Play Party</option>
+                    <option value="Private Party">Private Party</option>
+                    <option value="Queer Specific">Queer Specific</option>
+                    <option value="Social">Social</option>
+                    <option value="Spa">Spa</option>
+                    <option value="Workshop">Workshop</option>
+                </select>
+            </div>
+            <div>
+                <label for="city">City:</label>
+                <select id="city">
+                    <option value="all">Select</option>
+                    <option value="Online">Online/Virtual</option>
+                    <option value="">--- UK ---</option>
+                    <option value="Brighton">Brighton</option>
+                    <option value="Edinburgh">Edinburgh</option>
+                    <option value="Liverpool">Liverpool</option>
+                    <option value="London">London</option>
+                    <option value="Manchester">Manchester</option>
+                    <option value="">--- INTERNATIONAL ---</option>
+                    <option value="Berlin">Berlin</option>
+                    <option value="Ibiza">Ibiza</option>
+                    <option value="Italy">Italy</option>
+                    <option value="Los Angeles">Los Angeles</option>
+                    <option value="New York">New York</option>
+                </select>
+            </div>
+            <div>
+                <label for="host">Hosted by:</label>
+                <select id="host">
+                    <option value="all">Select</option>
+                    <option value="7Sins">7Sins</option>
+                    <option value="Dominium Vita">Dominium Vita</option>
+                    <option value="Feeld">Feeld</option>
+                    <option value="Fox & Badge">Fox & Badge</option>
+                    <option value="Heavens Circle">Heaven's Circle</option>
+                    <option value="Joyride">Joyride</option>
+                    <option value="Klub Verboten">Klub Verboten</option>
+                    <option value="Killing Kittens">Killing Kittens</option>
+                    <option value="La Boutique Bazaar">La Boutique Bazaar</option>
+                    <option value="Le Boudior">Le Boudior</option>
+                    <option value="Torture Garden">Torture Garden</option>
+                    <option value="Polyglam">Polyglam</option>
+                    <option value="Quench">Quench</option>
+                    <option value="Riot">RIOT</option>
+                    <option value="Rocket Project">Rocket Project</option>
+                    <option value="The Tribe">The Tribe</option>
+                    <option value="The Five Percent">The Five Percent</option>
+                </select>
+            </div>
+            <div>
+                <label for="perfect_for">Made For:</label>
+                <select id="perfect_for">
+                    <option value="all">Select</option>
+                    <option value="Everyone">Everyone</option>
+                    <option value="Singles">Singles</option>
+                    <option value="Couples">Couples</option>
+                    <option value="Newbies">Newbies</option>
+                    <option value="Queer">Queer</option>
+                    <option value="Women Only">Woman Only</option>
+                    <option value="Men Only">Men Only</option>
+                </select>
+            </div>
+            <div style="display: none !important;">
+                <label for="date">Date:</label>
+                <input type="date" id="date">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Display filtered results -->
+<div class="filter-result">
+    <p id="filterResult">Filter results</p>
+</div>
+
+<!-- Display filtered results -->
+<div id="loader" class="loader">
+    <div class="spinner"></div>
+    <p>Loading events...</p>
+</div>
+
+<!-- Display calendar -->
+<div id='calendar'></div>
+
+<!-- Modal structure -->
+<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventModalLabel"><iconify-icon icon="material-symbols:event-available" class="iconfy"></iconify-icon> Event Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modalEventImage" src="" alt="Event Image" style="width: 100%; height: auto; display: none;">
+                <p style="font-size: 30px; font-weight: 700;"><strong></strong> <span id="modalEventTitle"></span></p>
+                <p><strong></strong><iconify-icon icon="material-symbols:person" class="iconfy"></iconify-icon> <span id="modalEventHost"></span></p>
+                <p><strong><iconify-icon icon="material-symbols:calendar-today" class="iconfy"></iconify-icon></strong> <span id="modalEventDate"></span></p>
+                <p><strong><iconify-icon icon="material-symbols:location-on" class="iconfy"></iconify-icon></strong> <span id="modalEventLocation"></span></p>
+                <p><strong><iconify-icon icon="material-symbols:check-box" class="iconfy"></iconify-icon></strong> <span id="modalEventVenue"></span></p>
+                <p><a href="#" target="_blank" id="modalEventMapLink">View location on map ></a></p>
+                <p><strong>Description:<br></strong> <span id="modalEventDescription"></span></p>
+                <p style="font-weight: 600;">Category:</p>
+                <p><span id="modalEventCategory"></span></p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" target="_blank" id="modalEventTicketsLink">Tickets/Membership</a>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="shareToggle()" id="shareBtn">Share To</button>
+                    <div class="dropdown-content" id="shareButton">
+                        <a href="whatsapp://send?text=This is WhatsApp sharing example using link" data-action="share/whatsapp/share" target="_blank">WhatsApp</a>
+                        <a href="mailto:?subject=Check out this event&amp;body=I found it on https://playplan.co.uk/" title="Share by Email">Email</a>
+                        <a href="#">Copy Link</a>
+                    </div>
+                  </div>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+    const calendarEl = document.getElementById('calendar');
+    const loaderEl = document.getElementById('loader');
+    
+    // Show loader
+    loaderEl.style.display = 'flex';
+
+    function parseDate(dateStr) {
+        const [day, month, year] = dateStr.split('/');
+        return `${year}-${month}-${day}`;
+    }
+
+    async function getEventsFromDatabase() {
+        try {
+            const response = await fetch('fetch_events.php');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const csvText = await response.text();
+            console.log('CSV Data:', csvText); // Debugging statement
+
+            const parsedData = Papa.parse(csvText, { header: true }).data;
+            console.log('Parsed Data:', parsedData); // Debugging statement
+
+            return parsedData.map(event => ({
+                title: event.Title,
+                start: parseDate(event.Start),
+                location: event.Location,
+                host: event.Host,
+                category: event.Category ? event.Category.split(',').map(cat => cat.trim()) : [],
+                description: event.Description,
+                perfectFor: event.PerfectFor,
+                ticketsLink: event.TicketsLink,
+                image: event.Image ? event.Image : '',
+                mapUrl: event.MapURL
+            }));
+        } catch (error) {
+            console.error('Error in getEventsFromDatabase:', error);
+            return [];
+        }
+    }
+
+    try {
+        let events = await getEventsFromDatabase();
+        console.log('Fetched events:', events); // Debugging statement
+
+        const hostColors = {
+            "Klub Verboten": 'black',
+            "Torture Garden": '#c81d0d',
+            "The Tribe": 'blue',
+            "The Five Percent": '#000080',
+            "Other": '#091723'
+        };
+
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            events: events.map(event => ({
+                ...event,
+                backgroundColor: hostColors[event.host] || '#ababab'
+            })),
+            eventClick: function(info) {
+                const modal = new bootstrap.Modal(document.getElementById('eventModal'));
+                document.getElementById('modalEventImage').src = info.event.extendedProps.image;
+                document.getElementById('modalEventImage').style.display = info.event.extendedProps.image ? 'block' : 'none';
+                document.getElementById('modalEventTitle').textContent = info.event.title;
+                document.getElementById('modalEventDate').textContent = info.event.start.toLocaleDateString();
+                document.getElementById('modalEventLocation').textContent = info.event.extendedProps.location;
+                const mapLinkElement = document.getElementById('modalEventMapLink').parentElement;
+                if (info.event.extendedProps.mapUrl) {
+                    document.getElementById('modalEventMapLink').href = info.event.extendedProps.mapUrl;
+                    mapLinkElement.style.display = 'block';
+                } else {
+                    mapLinkElement.style.display = 'none';
+                }
+                document.getElementById('modalEventHost').textContent = info.event.extendedProps.host;
+                // Clear previous categories
+                const categoryContainer = document.getElementById('modalEventCategory');
+                categoryContainer.innerHTML = '';
+                // Display categories individually with styles
+                info.event.extendedProps.category.forEach(cat => {
+                    const categorySpan = document.createElement('span');
+                    categorySpan.textContent = cat;
+                    categorySpan.style.fontSize = '16px';
+                    categorySpan.style.padding = '2px 10px';
+                    categorySpan.style.marginBottom = '5px';
+                    categorySpan.style.borderRadius = '50px';
+                    categorySpan.style.backgroundColor = '#eee';
+                    categorySpan.style.color = '#1a1a1a';
+                    categorySpan.style.marginRight = '5px';
+                    categorySpan.style.display = 'inline-block';
+                    categorySpan.style.whiteSpace = 'nowrap';
+                    categoryContainer.appendChild(categorySpan);
+                });
+                document.getElementById('modalEventVenue').textContent = info.event.extendedProps.perfectFor;
+                document.getElementById('modalEventDescription').innerHTML = info.event.extendedProps.description;
+                document.getElementById('modalEventTicketsLink').href = info.event.extendedProps.ticketsLink;
+                modal.show();
+            }
+        });
+
+        calendar.render();
+        
+        // Hide loader after calendar is rendered
+        loaderEl.style.display = 'none';
+
+        $('#category').select2();
+        $('#resetButton').toggle();
+        $('#toggleAdvancedFilter').click(function() {});
+
+        document.getElementById('toggleAdvancedFilter').addEventListener('click', function() {
+            const advancedFilterDiv = document.getElementById('advancedFilterDiv');
+            const iconElement = this.querySelector('iconify-icon');
+            if (advancedFilterDiv.style.display === 'none' || advancedFilterDiv.style.display === '') {
+                advancedFilterDiv.style.display = 'flex';
+                iconElement.setAttribute('icon', 'material-symbols:filter-list-off');
+            } else {
+                advancedFilterDiv.style.display = 'none';
+                iconElement.setAttribute('icon', 'material-symbols:filter-list');
+            }
+        });
+
+        function filterEvents() {
+            const selectedCategories = $('#category').val() || [];
+            const selectedCity = $('#city').val();
+            const selectedHost = $('#host').val();
+            const selectedPerfectFor = $('#perfect_for').val();
+            const selectedDate = $('#date').val();
+            let filteredEvents = events;
+            if (selectedCategories.length > 0) {
+                filteredEvents = filteredEvents.filter(event => selectedCategories.some(cat => event.category.includes(cat)));
+            }
+            if (selectedCity !== 'all') {
+                filteredEvents = filteredEvents.filter(event => event.location === selectedCity);
+            }
+            if (selectedHost !== 'all') {
+                filteredEvents = filteredEvents.filter(event => event.host === selectedHost);
+            }
+            if (selectedPerfectFor !== 'all') {
+                filteredEvents = filteredEvents.filter(event => event.perfectFor === selectedPerfectFor);
+            }
+            if (selectedDate) {
+                filteredEvents = filteredEvents.filter(event => event.start === selectedDate);
+            }
+            calendar.removeAllEvents();
+            calendar.addEventSource(filteredEvents.map(event => ({
+                ...event,
+                backgroundColor: hostColors[event.host] || 'darkgrey',
+            })));
+            const filterResult = document.getElementById('filterResult');
+            const resultText = `Results: ${filteredEvents.length} events found`;
+            filterResult.textContent = resultText;
+            return filteredEvents;
+        }
+
+        $('#category, #city, #host, #perfect_for, #date').change(filterEvents);
+
+        $('#resetButton').click(function() {
+            $('#category').val([]).trigger('change');
+            $('#city').val('all');
+            $('#host').val('all');
+            $('#perfect_for').val('all');
+            $('#date').val('');
+            filterEvents();
+        });
+
+    } catch (error) {
+        console.error('Error initializing calendar:', error);
+        // Hide loader and show error message
+        loaderEl.style.display = 'none';
+        calendarEl.innerHTML = '<p>Error loading calendar. Please try again later.</p>';
+    }
+});
+
+function shareToggle() {
+    var x = document.getElementById("shareButton");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+        document.getElementById("shareBtn").innerHTML = "Close Toggle";
+    } else {
+        x.style.display = "none";
+        document.getElementById("shareBtn").innerHTML = "Share To";
+    }
+}
+
+// Consent Banner
+document.addEventListener("DOMContentLoaded", function() {
+    var consentBanner = document.getElementById("consent-banner");
+    var acceptBtn = document.getElementById("accept-btn");
+    var declineBtn = document.getElementById("decline-btn");
+
+    // Check local storage for consent state
+    var consentState = localStorage.getItem('consentState');
+
+    if (consentState === 'granted') {
+        // Set Google Consent Mode to 'granted'
+        window.gtag('consent', 'update', {
+            'analytics_storage': 'granted',
+            'ad_storage': 'granted'
+        });
+        // Hide the consent banner
+        consentBanner.style.display = 'none';
+    } else if (consentState === 'denied') {
+        // Set Google Consent Mode to 'denied'
+        window.gtag('consent', 'update', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied'
+        });
+        // Hide the consent banner
+        consentBanner.style.display = 'none';
+    } else {
+        // Show the consent banner
+        consentBanner.style.display = 'flex';
+    }
+
+    acceptBtn.addEventListener("click", function() {
+        // Set Google Consent Mode to 'granted'
+        window.gtag('consent', 'update', {
+            'analytics_storage': 'granted',
+            'ad_storage': 'granted'
+        });
+
+        // Store consent state
+        localStorage.setItem('consentState', 'granted');
+
+        // Hide the consent banner
+        consentBanner.style.display = 'none';
+    });
+
+    declineBtn.addEventListener("click", function() {
+        // Set Google Consent Mode to 'denied'
+        window.gtag('consent', 'update', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied'
+        });
+
+        // Store consent state
+        localStorage.setItem('consentState', 'denied');
+
+        // Hide the consent banner
+        consentBanner.style.display = 'none';
+    });
+});
+
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlayPlan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@200;400;600;800&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" href="/favicon/favicon.ico" type="image/x-icon">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-20LP6J9J9C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-20LP6J9J9C');
+  </script>
+
+  <style>
+    /* Resetting default margin and padding */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Karla', sans-serif;
+      background-color: #eff3f8;
+      color: #1a1a1a;
+      overflow-x: hidden;
+      padding: 0;
+      padding-top: 60px;
+    }
+
+    .scroll-down-p {
+      animation: floatAnimation 2.5s infinite;
+      margin: 10px auto;
+      text-align: center;
+      background-color: #ff3b29;
+      padding: 3px 6px;
+      border-radius: 5px;
+      width: fit-content;
+      display: none;
+    }
+
+    @keyframes floatAnimation {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(20px); }
+    }
+
+    .hero {
+      text-align: center;
+      padding: 10px;
+    }
+
+    .two-columns {
+      display: flex;
+      gap: 40px;
+      margin: auto;
+      width: 95%;
+      max-width: 1200px;
+    }
+
+    .two-columns > div {
+      width: 50%;
+      margin: 10px auto;
+      padding: 40px;
+      border-radius: 15px;
+      color: white;
+    }
+
+    h1 {
+      font-size: 55px;
+      font-weight: 600;
+    }
+
+    h2 {
+      font-size: 30px;
+      font-weight: 600;
+      padding-bottom: 5px;
+    }
+
+    p {
+      font-size: 18px;
+      padding-bottom: 10px;
+    }
+
+    .two-columns .aButton {
+      text-decoration: none;
+      color: #161616;
+      font-size: 16px;
+      background-color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+    }
+
+    .two-columns .aButton:hover {
+      background-color: #eff3f8;
+    }
+
+    .mailto {
+      color: white;
+      text-decoration: none;
+    }
+
+    .mailto:hover {
+      background: none !;
+      text-decoration: underline;
+      background-color: none !important;
+    }
+
+    .about-block {
+      margin: 40px auto;
+      width: 95%;
+      max-width: 1200px;
+      background-color: white;
+      color: #161616;
+      padding: 30px;
+      display: flex;
+      flex-direction: row;
+      border-radius: 15px;
+      gap: 40px;
+    }
+
+    .about-block > div {
+      width: 50%;
+      padding: 10px;
+    }
+
+    .image {
+      width: 500px;
+    }
+
+    @media only screen and (max-width: 800px) {
+      .hero {
+        padding: 10px;
+      }
+      .two-columns {
+        flex-direction: column;
+        margin: 10px;
+        max-width: 100%;
+      }
+      .two-columns > div {
+        width: 100%;
+        margin: 10px auto;
+        padding: 30px;
+      }
+      .two-columns .aButton {
+        padding: 10px;
+      }
+      .about-block {
+        margin: 40px 10px;
+        flex-direction: column;
+        padding: 20px;
+      }
+      .about-block > div {
+        width: 100%;
+        padding: 10px;
+      }
+      .image {
+        width: 300px;
+      }
+      .consent-banner > div {
+        flex-direction: column;
+        padding: 8px;
+    }
+
+    .consent-banner button {
+        margin: 3px;
+        width: 100%;
+    }
+    }
+
+/* Consent Banner */
+.consent-banner {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #05203c94;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    color: #fff;
+    padding: 10px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.consent-banner > div {
+  margin: 10px;
+}
+
+.consent-banner p {
+    margin: 0;
+    text-align: left;
+}
+
+.consent-banner a {
+    color: white;
+}
+
+.consent-banner button {
+    margin-left: 10px;
+    padding: 3px 6px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+#accept-btn {
+    background-color: white;
+    color: #1a1a1a;
+}
+
+#decline-btn {
+    background-color: lightgray;
+    color: #1a1a1a;
+}
+
+iconify-icon {
+    display: inline-block;
+}
+
+.logo-icon {
+  height: 20px;
+}
+
+/* New styles for the navigation menu */
+.navbar {
+      background-color: #05203ced;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      color: white;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .nav-links a:hover {
+      color: #eff3f8;
+      text-decoration: underline;
+    }
+
+    .burger {
+      display: none;
+      cursor: pointer;
+      font-size: 24px;
+      color: white;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    @media screen and (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #05203ced;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+        padding: 20px;
+      }
+
+      .nav-links a {
+        font-size: 20px;
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .burger {
+        display: block;
+      }
+    }
+    #scrolldown {
+    text-align: center !important;
+    background-color: #05203c55;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    color: white;
+    font-weight: 400;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 3px 6px;
+    border-radius: 5px;
+    animation: floatAnimation 1.8s infinite;
+    display: none;
+  }
+
+  </style>
+</head>
+<body>
+
+<!--- Consent banner -->
+<div id="consent-banner" class="consent-banner">
+  <p>We use cookies to help you find events. See our <a href="privacy-policy.html">privacy policy</a> here.</p>
+  <div>
+      <button id="accept-btn">Accept</button>
+      <button id="decline-btn">Decline</button>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo"><img src="playplan-logo.png" class="logo-icon"> PlayPlan</a>
+    <div class="nav-links" id="navLinks">
+      <a href="calendar-view.html">Calendar</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdHxRp2hvsQ8dwXLjQb8N0GV8Gy4JJ0jnLRyjLxVCqvrgSSTg/viewform">Add Event</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+    </div>
+    <button class="burger" id="burger">
+      <iconify-icon icon="material-symbols:menu-rounded"></iconify-icon>
+    </button>
+  </div>
+</nav>
+
+  <br><br>
+  <div class="hero">
+    <h1>Meet PlayPlan</h1>
+    <p style="padding-top: 10px; font-size: 20px;">Find events. Add your own</p>
+    <p id="scrolldown">Find out more 🔽</p>
+  </div>
+  <br>
+  <div class="two-columns">
+    <div style="background-color: #05203c; flex-grow: 1">
+      <p style="font-size: 40px;"><iconify-icon icon="twemoji:tear-off-calendar"></iconify-icon></p>
+      <h2>Events Calendar</h2>
+      <p>View all upcoming community events using our calendar. Filter and find exactly what you are looking for, or just plan ahead using the dated calendar. See where it's based, who should ideally attend and what you can expect to find.</p>
+      <br>
+      <a href="https://playplan.co.uk/calendar-view.html" class="aButton">See calendar ></a>
+    </div>
+    <div style="background-color: #0062e3; flex-grow: 1;">
+      <p style="font-size: 40px;"><iconify-icon icon="twemoji:admission-tickets"></iconify-icon></p>
+      <h2>Hosting an event?</h2>
+      <p>Add your event to the calendar by completing this Google Form. To ensure community safety, all submitted events are manually reviewed then added to the calendar. Questions? Reach out to <a href="mailto:hello@playplan.co.uk?subject=I'm%20a%20host%20%E2%9C%A8&body=Hello%20host!%20%F0%9F%91%8B%0A%0AHow%20can%20we%20help%20you%3F%0A%0A%E2%9E%A1%EF%B8%8F%20YOUR%20QUESTION%20HERE" class="mailto">hello@playplan.co.uk</a></p>
+      <br>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdHxRp2hvsQ8dwXLjQb8N0GV8Gy4JJ0jnLRyjLxVCqvrgSSTg/viewform" class="aButton">Add event ></a>
+    </div>
+  </div>
+  <div class="about-block"">
+    <div>
+      <h2>Community Made</h2>
+      <p>Made by the community, for the community. It's easy to use and free. We made this from scratch, built it ourselves so we don't have to rely on gated third party software.</p>
+      <br>
+      <p><iconify-icon icon="twemoji:check-mark-button"></iconify-icon> Filter by category, city and more</p>
+      <p><iconify-icon icon="twemoji:check-mark-button"></iconify-icon> Easily add and edit events</p>
+      <p><iconify-icon icon="twemoji:check-mark-button"></iconify-icon> Simple calendar view</p>
+      <p><iconify-icon icon="twemoji:check-mark-button"></iconify-icon> No sign in required</p>
+    </div>
+    <div>
+      <img src="ppc-ad.gif" class="image">
+    </div>
+  </div>
+  <br>
+  <br>
+  <p style="text-align: center; margin-bottom: 20px;"><a href="privacy-policy.html" style="text-align: center; color: #1a1a1a;">Privacy Policy</a><br>All rights reserved.<br>@ Bloomsbury, London UK<br>Made with ❤️ by our community</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var consentBanner = document.getElementById("consent-banner");
+    var acceptBtn = document.getElementById("accept-btn");
+    var declineBtn = document.getElementById("decline-btn");
+
+    // Check local storage for consent state
+    var consentState = localStorage.getItem('consentState');
+
+    if (consentState === 'granted') {
+        // Set Google Consent Mode to 'granted'
+        window.gtag('consent', 'update', {
+            'analytics_storage': 'granted',
+            'ad_storage': 'granted'
+        });
+        // Hide the consent banner
+        consentBanner.style.display = 'none';
+    } else if (consentState === 'denied') {
+        // Set Google Consent Mode to 'denied'
+        window.gtag('consent', 'update', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied'
+        });
+        // Hide the consent banner
+        consentBanner.style.display = 'none';
+    } else {
+        // Show the consent banner
+        consentBanner.style.display = 'flex';
+    }
+
+    acceptBtn.addEventListener("click", function() {
+        // Set Google Consent Mode to 'granted'
+        window.gtag('consent', 'update', {
+            'analytics_storage': 'granted',
+            'ad_storage': 'granted'
+        });
+
+        // Store consent state
+        localStorage.setItem('consentState', 'granted');
+
+        // Hide the consent banner
+        consentBanner.style.display = 'none';
+    });
+
+    declineBtn.addEventListener("click", function() {
+        // Set Google Consent Mode to 'denied'
+        window.gtag('consent', 'update', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied'
+        });
+
+        // Store consent state
+        localStorage.setItem('consentState', 'denied');
+
+        // Hide the consent banner
+        consentBanner.style.display = 'none';
+    });
+});
+
+// Navbar Toggle
+document.addEventListener("DOMContentLoaded", function() {
+      const burger = document.getElementById("burger");
+      const navLinks = document.getElementById("navLinks");
+      const burgerIcon = burger.querySelector("iconify-icon");
+
+      burger.addEventListener("click", function() {
+        navLinks.classList.toggle("show");
+        if (navLinks.classList.contains("show")) {
+          burgerIcon.setAttribute("icon", "material-symbols:close-rounded");
+        } else {
+          burgerIcon.setAttribute("icon", "material-symbols:menu-rounded");
+        }
+      });
+});
+
+
+</script>
+
+</body>
+</html>
