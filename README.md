@@ -1,2 +1,2 @@
 ## Legacy website
-## Uses Google Sheet API URL
+Uses Google Sheet API URL
